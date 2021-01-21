@@ -20,6 +20,9 @@
       #table tr{
           cursor: grab;
       }
+      .addAlert{
+          cursor: grab;
+      }
     </style>
     <title>Billing System</title>
   </head>
@@ -146,55 +149,64 @@
           items = items.filter(i => i != item);
           generateBill();
       }
-
+      
+      focusInput = () => {
+        document.getElementById('item').focus();
+      }
 
       function generatePDF() {  
-          var doc = new jsPDF('p', 'pt', 'letter');  
-          var htmlstring = '';  
-          var tempVarToCheckPageHeight = 0;  
-          var pageHeight = 0;  
-          pageHeight = doc.internal.pageSize.height;  
-          specialElementHandlers = {  
-              // element with id of "bypass" - jQuery style selector  
-              '#bypassme': function(element, renderer) {  
-                  // true = "handled elsewhere, bypass text extraction"  
-                  return true  
-              }  
-          };  
-          margins = {  
-              top: 150,  
-              bottom: 60,  
-              left: 40,  
-              right: 40,  
-              width: 600  
-          };  
-          var y = 20;  
-          doc.setLineWidth(2);  
-          doc.text(300, y = y + 30, "Bill");  
-          doc.autoTable({  
-              html: '#table',  
-              startY: 70,  
-              theme: 'grid',  
-              columnStyles: {  
-                  0: {  
-                      cellWidth: 100,  
-                  },  
-                  1: {  
-                      cellWidth: 200,  
-                  },  
-                  2: {  
-                      cellWidth: 110,  
-                  }, 
-                  3: {
-                      cellWidth: 110
-                  } 
-              },  
-              styles: {  
-                  minCellHeight: 30  
-              }  
-          })  
-          doc.save('bill.pdf');  
-      }
+
+        if(items.length>0){
+            var doc = new jsPDF('p', 'pt', 'letter');  
+            var htmlstring = '';  
+            var tempVarToCheckPageHeight = 0;  
+            var pageHeight = 0;  
+            pageHeight = doc.internal.pageSize.height;  
+            specialElementHandlers = {  
+                // element with id of "bypass" - jQuery style selector  
+                '#bypassme': function(element, renderer) {  
+                    // true = "handled elsewhere, bypass text extraction"  
+                    return true  
+                }  
+            };  
+            margins = {  
+                top: 150,  
+                bottom: 60,  
+                left: 40,  
+                right: 40,  
+                width: 600  
+            };  
+            var y = 20;  
+            doc.setLineWidth(2);  
+            doc.text(300, y = y + 30, "Bill");  
+            doc.autoTable({  
+                html: '#table',  
+                startY: 70,  
+                theme: 'grid',  
+                columnStyles: {  
+                    0: {  
+                        cellWidth: 100,  
+                    },  
+                    1: {  
+                        cellWidth: 200,  
+                    },  
+                    2: {  
+                        cellWidth: 110,  
+                    }, 
+                    3: {
+                        cellWidth: 110
+                    } 
+                },  
+                styles: {  
+                    minCellHeight: 30  
+                }  
+            })
+            doc.save('bill.pdf');  
+        }else{
+            let messageBody = document.getElementById('message');
+            messageBody.innerHTML = '<div class="alert alert-warning addAlert" role="alert">Nothing added to bill! <a onclick="focusInput()" class="alert-link">Add Item</a></div>';
+        }
+    } 
     </script>
   </body>
 </html>
