@@ -206,7 +206,7 @@
             doc.save('bill.pdf');  
         }else{
             let messageBody = document.getElementById('message');
-            messageBody.innerHTML = '<div class="alert alert-warning addAlert" role="alert">Nothing added to bill! <a onclick="focusInput()" class="alert-link">Add Item</a></div>';
+            messageBody.innerHTML = '<div class="alert alert-warning addAlert alert-dismissible fade show" role="alert">Nothing added to bill!&nbsp;&nbsp; <a onclick="focusInput()" class="alert-link">Add Item</a><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         }
     } 
     </script>
